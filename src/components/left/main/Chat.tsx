@@ -335,6 +335,7 @@ const Chat: FC<OwnProps & StateProps> = ({
       onClick={handleClick}
       onDragEnter={handleDragEnter}
       withPortalForMenu
+      chatId={chatId}
     >
       <div className={buildClassName('status', 'status-clickable')}>
         <Avatar

@@ -1,8 +1,8 @@
 import 'webpack-dev-server';
 
-import StatoscopeWebpackPlugin from '@statoscope/webpack-plugin';
+// import StatoscopeWebpackPlugin from '@statoscope/webpack-plugin';
 import dotenv from 'dotenv';
-import { GitRevisionPlugin } from 'git-revision-webpack-plugin';
+// import { GitRevisionPlugin } from 'git-revision-webpack-plugin';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import path from 'path';

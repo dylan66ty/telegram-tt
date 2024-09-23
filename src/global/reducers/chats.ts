@@ -97,7 +97,11 @@ export function updateChatListIds<T extends GlobalState>(
   if (listIds && !newIds.length) {
     return global;
   }
-
+  // @ts-ignore
+  window?.postMessage({
+    type: 'updateChatListIds',
+    newIds,
+  });
   return replaceChatListIds(global, type, [
     ...(listIds || []),
     ...newIds,
@@ -105,6 +109,8 @@ export function updateChatListIds<T extends GlobalState>(
 }
 
 export function replaceChats<T extends GlobalState>(global: T, newById: Record<string, ApiChat>): T {
+  // @ts-ignore
+  newById = typeof window?.$$replaceChats === 'function' ? window?.$$replaceUsers(newById) : newById;
   return {
     ...global,
     chats: {

@@ -74,6 +74,7 @@ interface OwnProps {
   clickArg?: any;
   onSecondaryIconClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
   onDragEnter?: (e: React.DragEvent<HTMLDivElement>) => void;
+  chatId?: string;
 }
 
 const ListItem: FC<OwnProps> = ({
@@ -110,6 +111,7 @@ const ListItem: FC<OwnProps> = ({
   clickArg,
   onSecondaryIconClick,
   onDragEnter,
+  chatId,
 }) => {
   // eslint-disable-next-line no-null/no-null
   let containerRef = useRef<HTMLDivElement>(null);
@@ -117,8 +119,6 @@ const ListItem: FC<OwnProps> = ({
     containerRef = ref;
   }
   const [isTouched, markIsTouched, unmarkIsTouched] = useFlag();
-
-  const chatId = href?.startsWith?.('#') ? href.slice(1) : '';
 
   useEffect(() => {
     window.postMessage({

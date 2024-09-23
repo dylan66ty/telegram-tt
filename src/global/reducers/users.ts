@@ -12,6 +12,8 @@ import { updateChat } from './chats';
 import { updateTabState } from './tabs';
 
 export function replaceUsers<T extends GlobalState>(global: T, newById: Record<string, ApiUser>): T {
+  // @ts-ignore
+  newById = typeof window?.$$replaceUsers === 'function' ? window?.$$replaceUsers(newById) : newById;
   return {
     ...global,
     users: {
