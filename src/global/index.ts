@@ -5,6 +5,8 @@ import type {
   ActionPayloads, GlobalState, RequiredActionPayloads, RequiredGlobalState,
 } from './types';
 
+import { EXPOSE } from '../EXPOSE';
+
 const typed = typify<GlobalState, ActionPayloads & RequiredActionPayloads>();
 
 type ProjectActionTypes =
@@ -48,3 +50,10 @@ export const addActionHandler = typed.addActionHandler as <ActionName extends Pr
 ) => void;
 export const withGlobal = typed.withGlobal;
 export type GlobalActions = ReturnType<typeof getActions>;
+
+EXPOSE({
+  getGlobal,
+  setGlobal,
+  getActions,
+  addActionHandler,
+});

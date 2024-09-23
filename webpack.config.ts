@@ -225,19 +225,19 @@ export default function createConfig(
       new ProvidePlugin({
         Buffer: ['buffer', 'Buffer'],
       }),
-      new StatoscopeWebpackPlugin({
-        statsOptions: {
-          context: __dirname,
-        },
-        saveReportTo: path.resolve('./public/statoscope-report.html'),
-        saveStatsTo: path.resolve('./public/build-stats.json'),
-        normalizeStats: true,
-        open: 'file',
-        extensions: [new WebpackContextExtension()], // eslint-disable-line @typescript-eslint/no-use-before-define
-      }),
+      // new StatoscopeWebpackPlugin({
+      //   statsOptions: {
+      //     context: __dirname,
+      //   },
+      //   saveReportTo: path.resolve('./public/statoscope-report.html'),
+      //   saveStatsTo: path.resolve('./public/build-stats.json'),
+      //   normalizeStats: true,
+      //   open: 'file',
+      //   extensions: [new WebpackContextExtension()], // eslint-disable-line @typescript-eslint/no-use-before-define
+      // }),
     ],
 
-    devtool: APP_ENV === 'production' && IS_PACKAGED_ELECTRON ? undefined : 'source-map',
+    devtool: APP_ENV === 'production' ? undefined : 'source-map',
 
     optimization: {
       splitChunks: {
@@ -256,10 +256,7 @@ export default function createConfig(
 }
 
 function getGitMetadata() {
-  const gitRevisionPlugin = new GitRevisionPlugin();
-  const branch = HEAD || gitRevisionPlugin.branch();
-  const commit = gitRevisionPlugin.commithash()?.substring(0, 7);
-  return { branch, commit };
+  return { branch: 'master', commit: '001x001x001' };
 }
 
 class WebpackContextExtension {

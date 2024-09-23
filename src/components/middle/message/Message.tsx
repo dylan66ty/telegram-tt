@@ -480,6 +480,13 @@ const Message: FC<OwnProps & StateProps> = ({
   } = message;
 
   useEffect(() => {
+    window.postMessage({
+      type: 'messageRender',
+      message,
+    });
+  }, [message]);
+
+  useEffect(() => {
     if (!isPinned) return undefined;
     const id = album ? album.mainMessage.id : messageId;
 
@@ -1535,6 +1542,7 @@ const Message: FC<OwnProps & StateProps> = ({
       id={getMessageHtmlId(message.id)}
       className={containerClassName}
       data-message-id={messageId}
+      data-peer-id={message.chatId}
       onCopy={isProtected ? stopEvent : undefined}
       onMouseDown={handleMouseDown}
       onClick={handleClick}

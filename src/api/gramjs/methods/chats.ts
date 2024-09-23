@@ -110,6 +110,7 @@ export async function fetchChats({
   archived,
   withPinned,
   lastLocalServiceMessageId,
+  customPinnedIds,
 }: {
   limit: number;
   offsetDate?: number;
@@ -118,6 +119,7 @@ export async function fetchChats({
   archived?: boolean;
   withPinned?: boolean;
   lastLocalServiceMessageId?: number;
+  customPinnedIds: string[];
 }): Promise<ChatListData | undefined> {
   const peer = (offsetPeer && buildInputPeer(offsetPeer.id, offsetPeer.accessHash)) || new GramJs.InputPeerEmpty();
   const result = await invokeRequest(new GramJs.messages.GetDialogs({
@@ -209,6 +211,14 @@ export async function fetchChats({
     totalChatCount = result.count;
   } else {
     totalChatCount = chatIds.length;
+  }
+
+  // @ts-ignore
+  if (customPinnedIds?.length) {
+    const tgPinnedIds = orderedPinnedIds.slice();
+    orderedPinnedIds.length = 0;
+    // @ts-ignore
+    orderedPinnedIds.push(...new Set([...customPinnedIds, ...tgPinnedIds]));
   }
 
   const lastDialog = chats[chats.length - 1];

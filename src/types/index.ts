@@ -82,7 +82,7 @@ export type NotifySettings = {
 
 export type LangCode = (
   'en' | 'ar' | 'be' | 'ca' | 'nl' | 'fr' | 'de' | 'id' | 'it' | 'ko' | 'ms' | 'fa' | 'pl' | 'pt-br' | 'ru' | 'es'
-  | 'tr' | 'uk' | 'uz'
+  | 'tr' | 'uk' | 'uz' | 'zh-hans-raw'
 );
 
 export type TimeFormat = '24h' | '12h';

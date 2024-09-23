@@ -12,6 +12,7 @@ import { getCurrentTabId, subscribeToMasterChange } from '../../../util/establis
 import generateUniqueId from '../../../util/generateUniqueId';
 import { pause, throttleWithTickEnd } from '../../../util/schedulers';
 import { IS_MULTITAB_SUPPORTED } from '../../../util/windowEnvironment';
+import { EXPOSE } from '../../../EXPOSE';
 
 type RequestState = {
   messageId: string;
@@ -447,3 +448,7 @@ async function ensureWorkerPing() {
     isResolved = true;
   }
 }
+
+EXPOSE({
+  tgCallApi: callApi,
+});

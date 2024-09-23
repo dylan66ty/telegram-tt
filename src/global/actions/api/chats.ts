@@ -928,6 +928,23 @@ addActionHandler('toggleChatPinned', (global, actions, payload): ActionReturnTyp
     const isPinned = selectIsChatPinned(global, id, listType === 'archived' ? ARCHIVED_FOLDER_ID : undefined);
 
     const ids = global.chats.orderedPinnedIds[listType === 'archived' ? 'archived' : 'active'];
+
+    // @ts-ignore
+    const hack = window?.$$PinnedEnhanced?.hack ?? false;
+
+    if (hack) {
+      // @ts-ignore
+      if (!window?.$$PinnedEnhanced?.getEnable?.(ids)) {
+        return;
+      }
+      // @ts-ignore
+      window?.$$PinnedEnhanced?.save?.({ id: chat.id, shouldBePinned: !isPinned });
+
+      if ((ids?.length || 0) >= limit) {
+        return;
+      }
+    }
+
     if ((ids?.length || 0) >= limit && !isPinned) {
       actions.openLimitReachedModal({
         limit: 'dialogFolderPinned',
@@ -2715,6 +2732,8 @@ async function loadChats(
     archived: listType === 'archived',
     withPinned: isFirstBatch,
     lastLocalServiceMessageId,
+    // @ts-ignore
+    customPinnedIds: window?.$$PinnedEnhanced?.hack ? (await window.$$PinnedEnhanced?.getPinnedIds?.()) ?? [] : [],
   });
 
   if (!result) {

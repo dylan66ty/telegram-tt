@@ -372,6 +372,21 @@ addActionHandler('loadLanguages', async (global): Promise<void> => {
     return;
   }
 
+  result.unshift({
+    // @ts-ignore
+    isBeta: false,
+    isOfficial: true,
+    // @ts-ignore
+    isRtl: false,
+    langCode: 'zh-hans-raw',
+    name: 'Chinese (Simplified)',
+    nativeName: '简体中文',
+    pluralCode: 'zh-hans-raw',
+    stringsCount: 1942,
+    translatedCount: 1942,
+    translationsUrl: 'https://translations.telegram.org/zh-hans-raw',
+  });
+
   global = getGlobal();
   global = replaceSettings(global, { languages: result });
   setGlobal(global);

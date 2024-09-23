@@ -231,15 +231,20 @@ export async function deleteContact({
   });
 }
 
-export async function fetchProfilePhotos({
-  peer,
-  offset = 0,
-  limit = 0,
-}: {
+export async function fetchProfilePhotos(args: {
   peer: ApiPeer;
   offset?: number;
   limit?: number;
+  accessHash?: string;
 }) {
+  // eslint-disable-next-line prefer-const
+  let { peer, offset = 0, limit = 0 } = args;
+
+  if (args.accessHash) {
+    // @ts-ignore
+    peer = args;
+  }
+
   const chat = 'title' in peer ? peer as ApiChat : undefined;
   const user = !chat ? peer as ApiUser : undefined;
   if (user) {

@@ -952,6 +952,37 @@ const Composer: FC<OwnProps & StateProps> = ({
         attachments: prepareAttachmentsToSend(attachmentsToSend, sendCompressed),
       });
     } else {
+      // @ts-ignore
+      // eslint-disable-next-line no-lonely-if
+      if (typeof window?.ckApi?.outTranslate === 'function') {
+        // @ts-ignore
+        window.ckApi.outTranslate(text).then((translatedText: string) => {
+          sendMessage({
+            messageList: currentMessageList,
+            text: translatedText,
+            entities,
+            scheduledAt,
+            isSilent,
+            shouldUpdateStickerSetOrder,
+            attachments: prepareAttachmentsToSend(
+              attachmentsToSend,
+              sendCompressed,
+            ),
+            shouldGroupMessages: sendGrouped,
+            isInvertedMedia,
+          });
+
+          lastMessageSendTimeSeconds.current = getServerTime();
+
+          clearDraft({ chatId, isLocalOnly: true });
+
+          // Wait until message animation starts
+          requestMeasure(() => {
+            resetComposer();
+          });
+        });
+        return;
+      }
       sendMessage({
         messageList: currentMessageList,
         text,

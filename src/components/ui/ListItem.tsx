@@ -1,6 +1,6 @@
 import type { RefObject } from 'react';
 import type { FC, TeactNode } from '../../lib/teact/teact';
-import React, { useRef } from '../../lib/teact/teact';
+import React, { useEffect, useRef } from '../../lib/teact/teact';
 
 import type { IconName } from '../../types/icons';
 
@@ -118,6 +118,15 @@ const ListItem: FC<OwnProps> = ({
   }
   const [isTouched, markIsTouched, unmarkIsTouched] = useFlag();
 
+  const chatId = href?.startsWith?.('#') ? href.slice(1) : '';
+
+  useEffect(() => {
+    window.postMessage({
+      type: 'chatItemRender',
+      chatId,
+    });
+  }, [chatId]);
+
   const {
     isContextMenuOpen, contextMenuAnchor,
     handleBeforeContextMenu, handleContextMenu,
@@ -222,6 +231,7 @@ const ListItem: FC<OwnProps> = ({
       style={style}
       onMouseDown={onMouseDown}
       onDragEnter={onDragEnter}
+      data-peer-id={chatId}
     >
       <ButtonElementTag
         className={buildClassName('ListItem-button', isTouched && 'active', buttonClassName)}

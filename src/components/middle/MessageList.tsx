@@ -228,6 +228,8 @@ const MessageList: FC<OwnProps & StateProps> = ({
     if (areMessagesLoaded) {
       onTickEnd(() => {
         shouldAnimateAppearanceRef.current = false;
+        // @ts-ignore
+        window?.ckApi?.messageRenderComplete?.();
       });
     }
   }, [areMessagesLoaded]);
@@ -432,6 +434,9 @@ const MessageList: FC<OwnProps & StateProps> = ({
       if (type === 'thread') {
         setScrollOffset({ chatId, threadId, scrollOffset: scrollOffsetRef.current });
       }
+
+      // @ts-ignore
+      window?.ckApi?.messageRenderComplete?.();
     });
   });
 

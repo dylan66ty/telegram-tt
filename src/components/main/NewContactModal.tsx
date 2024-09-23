@@ -58,7 +58,7 @@ const NewContactModal: FC<OwnProps & StateProps> = ({
   const [firstName, setFirstName] = useState<string>(renderingUser?.firstName ?? '');
   const [lastName, setLastName] = useState<string>(renderingUser?.lastName ?? '');
   const [phone, setPhone] = useState<string>(renderingUser?.phoneNumber ?? '');
-  const [shouldSharePhoneNumber, setShouldSharePhoneNumber] = useState<boolean>(true);
+  const [shouldSharePhoneNumber, setShouldSharePhoneNumber] = useState<boolean>(false);
   const canBeSubmitted = Boolean(firstName && (!isByPhoneNumber || phone));
 
   useEffect(() => {
@@ -67,7 +67,7 @@ const NewContactModal: FC<OwnProps & StateProps> = ({
       setFirstName(renderingUser?.firstName ?? '');
       setLastName(renderingUser?.lastName ?? '');
       setPhone(renderingUser?.phoneNumber ?? '');
-      setShouldSharePhoneNumber(true);
+      setShouldSharePhoneNumber(false);
     }
   }, [isOpen, markIsShown, renderingUser?.firstName, renderingUser?.lastName, renderingUser?.phoneNumber]);
 
